@@ -37,21 +37,18 @@ fn handle_key_event_for_main(keycode: KeyCode, app: &mut App, len_of_networks: u
                 app.overlay = Overlay::None;
             }
 
-            KeyCode::Up => {
-                state.select_previous();
+            KeyCode::Up => match state.selected() {
+                Some(0) | None => state.select(Some(4)),
+                Some(4) => state.select(Some(2)),
+                Some(i) => state.select(Some(i - 1)),
+            },
 
-                if state.selected() == Some(3) {
-                    state.select_previous();
-                }
-            }
-
-            KeyCode::Down => {
-                state.select_next();
-
-                if state.selected() == Some(3) {
-                    state.select_next();
-                }
-            }
+            KeyCode::Down => match state.selected() {
+                Some(4) => state.select(Some(0)),
+                Some(2) => state.select(Some(4)),
+                Some(i) => state.select(Some(i + 1)),
+                None => state.select(Some(0)),
+            },
 
             _ => {}
         },

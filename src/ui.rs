@@ -1,7 +1,7 @@
 use ratatui::{
     Frame,
     layout::{Alignment, Constraint, Layout, Rect},
-    style::{Color, Modifier, Style, palette::tailwind::SLATE},
+    style::{Color, Modifier, Style, Stylize, palette::tailwind::SLATE},
     text::{Line, Text},
     widgets::{Block, BorderType, Borders, Clear, List, ListItem, ListState, Paragraph},
 };
@@ -117,7 +117,7 @@ fn render_menu(area: Rect, frame: &mut Frame, state: &mut ListState) {
 fn render_about(area: Rect, frame: &mut Frame) {
     let style = Style::default().fg(Color::Yellow).bg(Color::Black);
 
-    let popup_area = area.centered(Constraint::Length(50), Constraint::Length(12));
+    let popup_area = area.centered(Constraint::Length(50), Constraint::Length(9));
 
     frame.render_widget(Clear, popup_area);
 
@@ -129,19 +129,21 @@ fn render_about(area: Rect, frame: &mut Frame) {
         .style(style);
 
     let text = vec![
-        Line::from("Crabwire").style(style.bold()),
+        Line::from("Crabwire").style(Style::default().bold()),
         Line::from(""),
         Line::from("A lightweight TUI network manager for Linux"),
         Line::from(""),
-        Line::from(""),
-        Line::from(format!("Version {}", env!("CARGO_PKG_VERSION"))).style(style),
-        Line::from(""),
-        Line::from(""),
+        // Line::from(""),
+        Line::from(format!("Version {}", env!("CARGO_PKG_VERSION"))),
+        // Line::from(""),
+        // Line::from(""),
         Line::from(""),
         Line::from("Made by Nizarjh"),
     ];
 
-    let paragraph = Paragraph::new(text).alignment(Alignment::Center);
+    let paragraph = Paragraph::new(text)
+        .style(Style::default().fg(Color::White))
+        .centered();
 
     let inner_area = block.inner(popup_area);
     frame.render_widget(block, popup_area);

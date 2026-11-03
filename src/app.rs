@@ -45,6 +45,7 @@ pub enum Overlay {
     Menu {
         state: ListState,
     },
+    About,
 }
 
 #[derive(Debug, Default)]

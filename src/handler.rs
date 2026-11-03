@@ -53,6 +53,18 @@ fn handle_key_event_for_main(keycode: KeyCode, app: &mut App, len_of_networks: u
                 }
             }
 
+            KeyCode::Enter => match state.selected() {
+                Some(4) => app.overlay = Overlay::About,
+                _ => {}
+            },
+
+            _ => {}
+        },
+        Overlay::About => match keycode {
+            KeyCode::Esc => {
+                app.overlay = Overlay::None;
+            }
+            KeyCode::Char('q') => app.quit(),
             _ => {}
         },
     }

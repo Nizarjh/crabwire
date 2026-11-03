@@ -19,6 +19,7 @@ pub fn render(app: &App, frame: &mut Frame) {
                 Overlay::PasswordInput => todo!(),
                 Overlay::ConfirmDisconnect => todo!(),
                 Overlay::Menu { mut state } => render_menu(area, frame, &mut state),
+                Overlay::About => render_about(area, frame),
             }
         }
         Screen::KnownNetworks => todo!(),
@@ -111,4 +112,38 @@ fn render_menu(area: Rect, frame: &mut Frame, state: &mut ListState) {
         .style(Style::default().fg(Color::White).bg(Color::Black));
 
     frame.render_stateful_widget(list, area_for_items, state);
+}
+
+fn render_about(area: Rect, frame: &mut Frame) {
+    let style = Style::default().fg(Color::Yellow).bg(Color::Black);
+
+    let popup_area = area.centered(Constraint::Length(50), Constraint::Length(12));
+
+    frame.render_widget(Clear, popup_area);
+
+    let block = Block::default()
+        .title(" About ")
+        .title_bottom(Line::from(" Esc Close ").alignment(Alignment::Right))
+        .borders(Borders::ALL)
+        .border_type(BorderType::Rounded)
+        .style(style);
+
+    let text = vec![
+        Line::from("Crabwire").style(style.bold()),
+        Line::from(""),
+        Line::from("A lightweight TUI network manager for Linux"),
+        Line::from(""),
+        Line::from(""),
+        Line::from(format!("Version {}", env!("CARGO_PKG_VERSION"))).style(style),
+        Line::from(""),
+        Line::from(""),
+        Line::from(""),
+        Line::from("Made by Nizarjh"),
+    ];
+
+    let paragraph = Paragraph::new(text).alignment(Alignment::Center);
+
+    let inner_area = block.inner(popup_area);
+    frame.render_widget(block, popup_area);
+    frame.render_widget(paragraph, inner_area);
 }

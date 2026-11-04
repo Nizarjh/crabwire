@@ -2,7 +2,7 @@ use ratatui::{
     Frame,
     layout::{Alignment, Constraint, Layout, Rect},
     style::{Color, Modifier, Style, Stylize, palette::tailwind::SLATE},
-    text::{Line, Text},
+    text::Line,
     widgets::{Block, BorderType, Borders, Clear, List, ListItem, ListState, Paragraph},
 };
 
@@ -47,10 +47,7 @@ fn render_main(area: Rect, app: &App, frame: &mut Frame) {
     ])
     .areas(status_block);
 
-    frame.render_widget(
-        Paragraph::new("Activate a connection").alignment(Alignment::Center),
-        head,
-    );
+    frame.render_widget(Paragraph::new("Activate a connection").centered(), head);
 
     let list_network = app
         .networks
@@ -94,17 +91,14 @@ fn render_menu(area: Rect, frame: &mut Frame, state: &mut ListState) {
     let [head, area_for_items] =
         Layout::vertical([Constraint::Length(2), Constraint::Min(5)]).areas(menu_area);
 
-    frame.render_widget(
-        Paragraph::new("Please select an option").alignment(Alignment::Center),
-        head,
-    );
+    frame.render_widget(Paragraph::new("Please select an option").centered(), head);
 
     let items = [
-        ListItem::new(Line::from("Known Networks").alignment(Alignment::Center)),
-        ListItem::new(Line::from("Interfaces").alignment(Alignment::Center)),
-        ListItem::new(Text::from("Keybinds").alignment(Alignment::Center)),
+        ListItem::new(Line::from("Known Networks").centered()),
+        ListItem::new(Line::from("Interfaces").centered()),
+        ListItem::new(Line::from("Keybinds").centered()),
         ListItem::new(Line::from("")),
-        ListItem::new(Line::from("About").alignment(Alignment::Center)),
+        ListItem::new(Line::from("About").centered()),
     ];
 
     let list = List::new(items)

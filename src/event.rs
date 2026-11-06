@@ -41,11 +41,13 @@ impl EventHandler {
                     () = sender_cloned.closed() => {
                         break;
                     }
+
                     _ = tick_delay => {
                         if sender_cloned.send(Event::Tick).is_err() {
                             break;
                         }
                     }
+
                     Some(Ok(evt)) = crossterm_event => {
                         match evt {
                             CrosstermEvent::Key(key)

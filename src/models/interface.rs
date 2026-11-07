@@ -1,8 +1,10 @@
 use std::{fmt, net::IpAddr};
 
+use network_interface::NetworkInterface;
+
 pub struct Interface {
-    pub name: String,
-    pub mac_address: Option<String>,
+    pub network_interface: NetworkInterface,
+    pub capabilities: InterfaceCapabilities,
     pub state: InterfaceState,
     pub is_active: bool,
 }
@@ -25,7 +27,6 @@ pub enum InterfaceState {
     Connecting,
     Connected(ConnectionInfo),
 }
-
 
 impl fmt::Display for InterfaceState {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

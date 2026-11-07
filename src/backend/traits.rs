@@ -5,6 +5,7 @@ use crate::models::{
 };
 use anyhow::Result;
 
+//TODO: impl for wpa_supplicant and iwd
 pub trait WifiBackend {
     async fn interfaces(&self) -> Result<Vec<Interface>>;
     async fn capabilities(&self, interface: &str) -> Result<InterfaceCapabilities>;
